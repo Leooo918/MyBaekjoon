@@ -21,7 +21,6 @@ int main()
 		cin >> a;
 		A.push_back(a);
 	}
-
 	sort(A.begin(), A.end());
 
 	cin >> m;
