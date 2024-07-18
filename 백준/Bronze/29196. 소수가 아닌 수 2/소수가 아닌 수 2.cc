@@ -5,10 +5,10 @@ using namespace std;
 
 int main()
 {
-	float input;
+	double input;
 	cin >> input;
 
-	float p = 1, q = 1;
+	double p = 1, q = 1;
 
 	while (abs((p / q) - input) > 0.000001f) 
 	{
