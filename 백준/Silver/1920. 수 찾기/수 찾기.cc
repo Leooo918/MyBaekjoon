@@ -1,54 +1,58 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include<vector>
 
 using namespace std;
 
 
 int main()
 {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+    
 	int n, m;
-	vector<int> A;
+	vector<long long int> v;
+	long long int input;
 
 	cin >> n;
+
+	long long int left = 0, mid, right = n - 1;
+
 	for (int i = 0; i < n; i++)
 	{
-		int a;
-		cin >> a;
-		A.push_back(a);
+		cin >> input;
+		v.push_back(input);
 	}
-	sort(A.begin(), A.end());
+
+	sort(v.begin(), v.end());
 
 	cin >> m;
 	for (int i = 0; i < m; i++)
 	{
-		int b;
-		cin >> b;
+		cin >> input;
 
-
-		int start = 0;
-		int end = n - 1;
-		int mid;
-
-		bool isIt = false;
-		while (end >= start)
+		bool exsist = false;
+		while (left <= right)
 		{
-			mid = (start + end) / 2;
-			if (A[mid] == b)
+			mid = left + ((right - left) / 2);
+
+
+			if (v[mid] > input)
 			{
-				cout << 1 << "\n";
-				isIt = true;
+				right = mid - 1;
+			}
+			else if (v[mid] < input)
+			{
+				left = mid + 1;
+			}
+			else
+			{
+				exsist = true;
 				break;
 			}
-			else if (A[mid] > b) end = mid - 1;
-			else start = mid + 1;
 		}
-		if (isIt == false) {
-			cout << 0 << "\n";
-		}
+
+		left = 0;
+		right = n - 1;
+		cout << (exsist ? 1 : 0) << "\n";
 	}
 }
