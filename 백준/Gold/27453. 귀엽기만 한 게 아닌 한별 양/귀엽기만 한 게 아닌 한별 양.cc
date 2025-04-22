@@ -11,7 +11,7 @@ int n, m, k;
 //맵
 int arr[1001][1001];
 //몇번째로 방문을 했는지
-int visit[1001][1001][5][5];
+int visit[1001][1001][5];
 
 //UP, DOWN, RIGHT, LEFT
 int dx[5] = { 0,0,1,-1,0 };
@@ -20,7 +20,7 @@ int dy[5] = { 1,-1,0,0,0 };
 struct node
 {
 	int x, y;
-	int prevDir, pprevDir;
+	int prevDir;
 };
 
 
@@ -48,8 +48,8 @@ int main()
 			if (input[j] == 'S')
 			{
 				arr[i][j] = 0;
-				q.push({ j,i,4,4 });
-				visit[i][j][4][4] = 0;
+				q.push({ j,i,4 });
+				visit[i][j][4] = 0;
 			}
 
 			if (input[j] == 'H')
@@ -72,16 +72,9 @@ int main()
 		int prevDir = q.front().prevDir;
 		int prevX = x - dx[prevDir], prevY = y - dy[prevDir];
 		int prev = arr[prevY][prevX];
-
-		int pprevDir = q.front().pprevDir;
-		int pprevX = prevX - dx[pprevDir], pprevY = prevY - dy[pprevDir];
-		int pprev = arr[pprevY][pprevX];
 		
-		int count = visit[y][x][prevDir][pprevDir];
+		int count = visit[y][x][prevDir];
 		q.pop();
-
-		//cout << prevDir << ' ' << pprevDir << ' ';
-		//cout << x << ' ' << y << ' ' << count << '\n';
 
 		//탐색 성공하면 탈출
 		if (y == ey && x == ex)
@@ -98,15 +91,15 @@ int main()
 			int nx = x + dx[i];
 
 			if (ny < 0 || nx < 0 || ny >= n || nx >= m || arr[ny][nx] == -1) continue;
-			if (visit[ny][nx][i][prevDir] >= 0) continue;
+			if (visit[ny][nx][i] >= 0) continue;
 			if (ny == prevY && nx == prevX) continue;
 
 			//최근 3회 불행 총량, 최근 3회동안의 위치
 			int misportune = arr[ny][nx] + arr[y][x] + prev;
 			if (misportune > k) continue;
 
-			q.push({ nx,ny, i, prevDir });
-			visit[ny][nx][i][prevDir] = count + 1;
+			q.push({ nx,ny, i });
+			visit[ny][nx][i] = count + 1;
 		}
 	}
 
